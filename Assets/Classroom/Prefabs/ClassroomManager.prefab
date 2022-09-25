@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8640855494290439947
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2529045407872127301}
+  - component: {fileID: 81400703662933770}
+  m_Layer: 0
+  m_Name: ClassroomManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2529045407872127301
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8640855494290439947}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &81400703662933770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8640855494290439947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0ee7b7df80fe24897f20e357bcbf80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  professorPrefab: {fileID: 2574176137795244856, guid: 058b8562995eab3478ecca8f7e116816, type: 3}
+  studentPrefab: {fileID: 7282827123521407503, guid: 51ea966f63f79534f9a4b32ba120daeb, type: 3}
+  roverPrefab: {fileID: 8251594864840825906, guid: 40250ecf9a236b047bd3b5931577e439, type: 3}
+  instructorUIPrefab: {fileID: 2310062003321643663, guid: 41c2b02919884ae4e90f40df19cac4b5, type: 3}
+  studentUIPrefab: {fileID: 2310062003321643663, guid: 5438f62c49472fa448b2b82ab7fc61c3, type: 3}
+  professorSpawnTransform: {fileID: 0}
+  studentSpawnTransform: {fileID: 0}
+  roverSpawnTransform: {fileID: 0}
