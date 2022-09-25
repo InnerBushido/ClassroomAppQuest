@@ -7,6 +7,8 @@ using TMPro;
 
 public class ClassroomUser : MonoBehaviourPunCallbacks
 {
+    #region Public Fields
+
     [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
     public static GameObject LocalPlayerInstance;
 
@@ -26,19 +28,25 @@ public class ClassroomUser : MonoBehaviourPunCallbacks
     public Color userColor = Color.red;
 
     public List<Renderer> userMesh = new List<Renderer>();
-    //public Renderer userMesh;
 
     public Transform startOfSoul;
     public bool studentMuted = false;
+
+    #endregion
+
+    #region MonoBehaviour CallBacks
 
     private void Awake()
     {
         if(userMesh.Count <= 0)
         {
             userMesh[0] = GetComponent<Renderer>();
-            //userMesh = GetComponent<Renderer>();
         }
     }
+
+    #endregion
+
+    #region Public Methods
 
     public void Initialize()
     {
@@ -55,23 +63,6 @@ public class ClassroomUser : MonoBehaviourPunCallbacks
             userRegion = ClassroomLauncher.userRegion;
             userEmail = ClassroomLauncher.userEmail;
             userColor = ClassroomLauncher.userColor;
-
-            //Instantiate Professor Soul
-            //var soul = PhotonNetwork.Instantiate(userSoulPrefab.name, Camera.main.transform.position, Camera.main.transform.rotation);
-            //var parabola = soul.GetComponent<ParabolaArch>();
-
-            //if (parabola != null)
-            //{
-            //    if (ClassroomUser.userSoul == null)
-            //    {
-            //        ClassroomUser.userSoul = parabola;
-            //    }
-
-            //    thisUserSoul = parabola;
-
-            //    parabola.startPointTransform = Camera.main.transform;
-            //    parabola.endPointTransform = ClassroomUser.LocalPlayerInstance.GetComponent<ClassroomUser>().startOfSoul;
-            //}
 
             if (ClassroomUser.userSoul == null)
             {
@@ -106,23 +97,7 @@ public class ClassroomUser : MonoBehaviourPunCallbacks
             {
                 photonView.RPC("PunRPC_SetNickName", RpcTarget.AllBuffered, PhotonNetwork.NickName);
             }
-
-            //if (userMesh != null)
-            //{
-            //    userMesh.material.color = userColor;
-            //}
-
-            if (!isProfessor)
-            {
-                ClassroomManager.Instance.connectedStudents++;
-                ClassroomManager.Instance.UpdateConnectedStudents();
-
-                //UpdateStudentScrollList();
-            }
         }
-        // #Critical
-        // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
-        //DontDestroyOnLoad(this.gameObject);
     }
 
     public void UpdateStudentScrollList()
@@ -134,10 +109,13 @@ public class ClassroomUser : MonoBehaviourPunCallbacks
     {
         if (photonView.IsMine)
         {
-            //raisedHand.SetActive(!raisedHand.activeSelf);
             photonView.RPC("PunRPC_RaiseHand", RpcTarget.AllBuffered, !raisedHand.activeSelf);
         }
     }
+
+    #endregion
+
+    #region RPC Calls
 
     [PunRPC]
     private void PunRPC_SetNickName(string nName)
@@ -173,7 +151,6 @@ public class ClassroomUser : MonoBehaviourPunCallbacks
 
         if (userMesh != null && userMesh.Count > 0)
         {
-            //userMesh.material.color = userColor;
             foreach(Renderer r in userMesh)
             {
                 r.material.color = userColor;
@@ -216,9 +193,7 @@ public class ClassroomUser : MonoBehaviourPunCallbacks
             {
                 thisUserSoul = parabola;
 
-                //parabola.startPointTransform = Camera.main.transform;
                 parabola.endPointTransform = startOfSoul;
-                //parabola.endPointTransform = ClassroomUser.LocalPlayerInstance.GetComponent<ClassroomUser>().startOfSoul;
             }
             else
             {
@@ -230,5 +205,7 @@ public class ClassroomUser : MonoBehaviourPunCallbacks
             Debug.LogError("PLAYER HAS NO SOUL");
         }
     }
+
+    #endregion
 
 }

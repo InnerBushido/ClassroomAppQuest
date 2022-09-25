@@ -8,7 +8,7 @@ using Microsoft.MixedReality.Toolkit.Experimental.UI;
 
 public class ClassroomLauncher : MonoBehaviourPunCallbacks
 {
-    //public GameObject classroomGameManagerPrefab;
+    #region Public Fields
 
     public static bool connectedAsProfessor = false;
     public static bool connectedInDebug = false;
@@ -25,6 +25,9 @@ public class ClassroomLauncher : MonoBehaviourPunCallbacks
 
     public KeyboardInput keyboard;
 
+    #endregion
+
+    #region Private Fields
 
     [Tooltip("The Ui Panel to let the user enter name, connect and play")]
     [SerializeField]
@@ -36,6 +39,10 @@ public class ClassroomLauncher : MonoBehaviourPunCallbacks
 
     string gameVersion = "1";
     bool isConnecting;
+
+    #endregion
+
+    #region MonoBehaviour CallBacks
 
     private void Start()
     {
@@ -62,6 +69,10 @@ public class ClassroomLauncher : MonoBehaviourPunCallbacks
         }
     }
 
+    #endregion
+
+    #region Public Methods
+
     public void ConnectAsProfessor()
     {
         keyboard.SetUserMetaData();
@@ -86,6 +97,10 @@ public class ClassroomLauncher : MonoBehaviourPunCallbacks
         Connect();
     }
 
+    #endregion
+
+    #region Private Methods
+
     private void Connect()
     {
         progressLabel.SetActive(true);
@@ -108,8 +123,9 @@ public class ClassroomLauncher : MonoBehaviourPunCallbacks
         }
     }
 
-    #region MonoBehaviourPunCallbacks Callbacks
+    #endregion
 
+    #region MonoBehaviourPunCallbacks Callbacks
 
     public override void OnConnectedToMaster()
     {
@@ -149,21 +165,9 @@ public class ClassroomLauncher : MonoBehaviourPunCallbacks
     {
         Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
 
-        //if (ClassroomGameManager.Instance == null)
-        //{
-        //    PhotonNetwork.Instantiate(classroomGameManagerPrefab.name, Vector3.zero, Quaternion.identity);
-        //}
-
         if (!connectedAsProfessor)
         {
             Debug.Log("CONNECTED AS A STUDENT");
-            //ClassroomGameManager.Instance.connectedStudents++;
-            //ClassroomGameManager.Instance.UpdateConnectedStudents();
-
-            //if (ClassroomUser.userUI != null)
-            //{
-            //    ClassroomUser.userUI.UpdateStudentScrollList();
-            //}
         }
 
         // #Critical: We only load if we are the first player, else we rely on `PhotonNetwork.AutomaticallySyncScene` to sync our instance scene.
@@ -174,7 +178,6 @@ public class ClassroomLauncher : MonoBehaviourPunCallbacks
             PhotonNetwork.LoadLevel("Classroom");
         }
     }
-
 
     #endregion
 

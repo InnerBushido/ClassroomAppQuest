@@ -12,6 +12,8 @@ public class VoiceUI : MonoBehaviourPun
 
     private float volumeBeforeMute;
 
+    #region Monobehaviour Callbacks
+
     private void OnEnable()
     {
         BetterToggleMRTK.ToggleValueChanged += this.BetterToggle_ToggleValueChanged;
@@ -22,6 +24,10 @@ public class VoiceUI : MonoBehaviourPun
         BetterToggleMRTK.ToggleValueChanged -= this.BetterToggle_ToggleValueChanged;
     }
 
+    #endregion
+
+    #region Event Callbacks
+
     private void BetterToggle_ToggleValueChanged(Interactable toggle)
     {
         ItemCardStudent student;
@@ -31,9 +37,9 @@ public class VoiceUI : MonoBehaviourPun
                 photonView.RPC("PunRPC_MuteStudents", RpcTarget.OthersBuffered, toggle.IsToggled);
                 break;
             case "TransmitButton":
-                if (this.recorder)
+                if (recorder)
                 {
-                    this.recorder.TransmitEnabled = toggle.IsToggled;
+                    recorder.TransmitEnabled = toggle.IsToggled;
                 }
                 break;
             case "MuteStudentButton":
@@ -60,6 +66,8 @@ public class VoiceUI : MonoBehaviourPun
                 break;
         }
     }
+
+    #endregion
 
     #region RPC Calls
 

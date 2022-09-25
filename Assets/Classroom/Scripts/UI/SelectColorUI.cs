@@ -6,9 +6,20 @@ using Microsoft.MixedReality.Toolkit.UI;
 
 public class SelectColorUI : MonoBehaviour
 {
+    #region Public Fields
+
     [SerializeField] private FollowMeToggle followMe = null;
     public GameObject colorWheel;
+
+    #endregion
+
+    #region Private Fields
+
     private bool enabled = false;
+
+    #endregion
+
+    #region Monobehaviour Callbacks
 
     private void Start()
     {
@@ -20,6 +31,10 @@ public class SelectColorUI : MonoBehaviour
 
         enabled = colorWheel.activeSelf;
     }
+
+    #endregion
+
+    #region Public Methods
 
     public void ToggleColorWheel()
     {
@@ -35,5 +50,7 @@ public class SelectColorUI : MonoBehaviour
 
         followMe.SetFollowMeBehavior(!enabled);
     }
+
+    #endregion
 
 }

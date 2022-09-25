@@ -266,7 +266,6 @@
     <Compile Include="Assets\Classroom\Scripts\UI\KeyboardInput.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Scripts\HandsManager.cs" />
     <Compile Include="Assets\Samples\Mixed Reality Toolkit Examples\2.8.2\Demos - UX\BoundsControl\Scripts\BoundsControlRuntimeExample.cs" />
-    <Compile Include="Assets\Classroom\Scripts\ClassroomGameManager.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\SceneSampler.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportTargetHandlerNode.cs" />
     <Compile Include="Assets\SDF_StageCollection\PostProcessing\Runtime\PostProcessManager.cs" />

@@ -25,7 +25,6 @@ namespace Com.MyCompany.MyGame
 
         #endregion
 
-
         #region Private Fields
 
 
@@ -43,7 +42,6 @@ namespace Com.MyCompany.MyGame
 
 
         #endregion
-
 
         #region MonoBehaviour CallBacks
 
@@ -64,7 +62,6 @@ namespace Com.MyCompany.MyGame
         }
 
         #endregion
-
 
         #region Public Methods
 
@@ -154,7 +151,6 @@ namespace Com.MyCompany.MyGame
 
 
         #endregion
-
 
     }
 }

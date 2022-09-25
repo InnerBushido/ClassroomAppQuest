@@ -24,15 +24,14 @@ public class ClassroomManager : MonoBehaviourPunCallbacks
     public GameObject studentUIPrefab;
 
     public Transform professorSpawnTransform;
-    //public Transform studentSpawnTransform;
     public GridObjectCollection studentSpawnCollection;
     public Transform roverSpawnTransform;
-
-    public int connectedStudents = 0;
 
     public List<GameObject> connectedStudentsList = new List<GameObject>();
 
     #endregion
+
+    #region MonoBehaviour CallBacks
 
     private void Start()
     {
@@ -49,6 +48,10 @@ public class ClassroomManager : MonoBehaviourPunCallbacks
         }
     }
 
+    #endregion
+
+    #region Private Methods
+
     private void InstantiatePlayer()
     {
         if (ClassroomLauncher.connectedAsProfessor)
@@ -57,7 +60,6 @@ public class ClassroomManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            //InstantiateUser(studentPrefab, studentSpawnTransform);
             InstantiateUser(studentPrefab, studentSpawnCollection.NodeListReadOnly[connectedStudentsList.Count].Transform);
         }
 
@@ -69,8 +71,8 @@ public class ClassroomManager : MonoBehaviourPunCallbacks
                 ClassroomLauncher.userRegion = ClassroomLauncher.userRegionsDebug[i];
                 ClassroomLauncher.userEmail = ClassroomLauncher.userEmailsDebug[i];
                 ClassroomLauncher.userColor = ClassroomLauncher.userColorsDebug[i];
-                //InstantiateUser(studentPrefab, studentSpawnTransform);
-                InstantiateUser(studentPrefab, studentSpawnCollection.NodeListReadOnly[connectedStudents].Transform);
+
+                InstantiateUser(studentPrefab, studentSpawnCollection.NodeListReadOnly[connectedStudentsList.Count].Transform);
             }
         }
     }
@@ -120,7 +122,6 @@ public class ClassroomManager : MonoBehaviourPunCallbacks
     private void InstantiateProfessorPrefabs()
     {
         // Instantiate Rover over the Network
-        //if (PhotonNetwork.IsMasterClient && ClassroomUser.RoverInstance == null)
         if(ClassroomUser.RoverInstance == null)
         {
             var rover = PhotonNetwork.Instantiate(roverPrefab.name, roverSpawnTransform.position, roverSpawnTransform.rotation);
@@ -145,9 +146,9 @@ public class ClassroomManager : MonoBehaviourPunCallbacks
         }
 
         //Instantiate Professor User UI
-        var userUI = Instantiate(instructorUIPrefab);
-        if(userUI != null)
+        if(instructorUIPrefab != null)
         {
+            var userUI = Instantiate(instructorUIPrefab);
             var classroomUserUI = userUI.GetComponent<ClassroomUserUI>();
 
             if(classroomUserUI != null)
@@ -162,6 +163,8 @@ public class ClassroomManager : MonoBehaviourPunCallbacks
         Instantiate(studentUIPrefab);
     }
 
+    #endregion
+
     #region Photon Callbacks
 
     /// <summary>
@@ -169,21 +172,6 @@ public class ClassroomManager : MonoBehaviourPunCallbacks
     /// </summary>
     public override void OnLeftRoom()
     {
-        if(ClassroomUser.LocalPlayerInstance != null)
-        {
-            ClassroomUser user = ClassroomUser.LocalPlayerInstance.GetComponent<ClassroomUser>();
-            if (user != null && !user.isProfessor)
-            {
-                //ClassroomGameManager.Instance.connectedStudents--;
-                //ClassroomGameManager.Instance.UpdateConnectedStudents();
-
-                //if (ClassroomUser.userUI != null)
-                //{
-                //    ClassroomUser.userUI.UpdateStudentScrollList();
-                //}                
-            }
-        }
-
         SceneManager.LoadScene(0);
     }
 
@@ -200,12 +188,6 @@ public class ClassroomManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region RPC Calls
-
-    [PunRPC]
-    void UpdateConnectedStudents(int updatedConnectStudents)
-    {
-        connectedStudents = updatedConnectStudents;
-    }
 
     [PunRPC]
     void AddToConnectedStudentsList(int newStudentView)
@@ -232,11 +214,6 @@ public class ClassroomManager : MonoBehaviourPunCallbacks
 
     #region Public Methods
 
-    public void UpdateConnectedStudents()
-    {
-        photonView.RPC("UpdateConnectedStudents", RpcTarget.AllBufferedViaServer, connectedStudents);
-    }
-
     public void RemoveFromStudentList()
     {
         photonView.RPC("RemoveFromConnectedStudentsList", RpcTarget.AllBufferedViaServer, ClassroomUser.LocalPlayerInstance.GetPhotonView().ViewID);
@@ -246,12 +223,8 @@ public class ClassroomManager : MonoBehaviourPunCallbacks
     {
         if (!ClassroomUser.LocalPlayerInstance.GetComponent<ClassroomUser>().isProfessor)
         {
-            ClassroomManager.Instance.connectedStudents--;
-            ClassroomManager.Instance.UpdateConnectedStudents();
-
             ClassroomManager.Instance.RemoveFromStudentList();
 
-            //UpdateStudentScrollList();
             ClassroomUser.LocalPlayerInstance.GetComponent<ClassroomUser>().UpdateStudentScrollList();
         }
 

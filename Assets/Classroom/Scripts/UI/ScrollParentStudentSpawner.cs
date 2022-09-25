@@ -8,6 +8,8 @@ using TMPro;
 
 public class ScrollParentStudentSpawner : MonoBehaviour
 {
+    #region Public Fields
+
     public GameObject studentPrefabToSpawn;
     public GridObjectCollection gridObject;
     public ScrollingObjectCollection scrollObject;
@@ -22,11 +24,20 @@ public class ScrollParentStudentSpawner : MonoBehaviour
     public bool pressableButtonsClicked = false;
     public GameObject pressableButtons;
     public ItemCardStudent selectedStudent;
-    private Transform pressableButtonsLocation;
 
     public List<GameObject> studentList = new List<GameObject>();
 
     public Interactable muteButton;
+
+    #endregion
+
+    #region Private Fields
+
+    private Transform pressableButtonsLocation;
+
+    #endregion
+
+    #region Monobehaviour Callbacks
 
     private void Start()
     {
@@ -35,9 +46,11 @@ public class ScrollParentStudentSpawner : MonoBehaviour
         pressableButtonsClicked = false;
         pressableButtons.SetActive(pressableButtonsClicked);
         metaDataPanel.SetActive(false);
-
-        //UpdateStudentScrollObject();
     }
+
+    #endregion
+
+    #region Public Methods
 
     public void PlacePressableButtonsAtLocation(Transform _Location, ItemCardStudent _student)
     {
@@ -100,24 +113,10 @@ public class ScrollParentStudentSpawner : MonoBehaviour
         }
     }
 
-    //public void ToggleMuteIcon()
-    //{
-    //    if(selectedStudent != null)
-    //    {
-    //        selectedStudent.ToggleMuteIcon();
-    //    }
-    //}
-
     public void UpdateStudentScrollObject()
     {
-        //if (ClassroomGameManager.Instance == null)
-        //{
-        //    Debug.LogError("MISSING CLASSROOM MANAGER");
-        //}
-
         CleanStudentList();
 
-        //for (int i = 0; i < ClassroomManager.Instance.connectedStudents; i++)
         for (int i = 0; i < ClassroomManager.Instance.connectedStudentsList.Count; i++)
         {
             GameObject spawnedStudentUI;
@@ -154,12 +153,28 @@ public class ScrollParentStudentSpawner : MonoBehaviour
         StartCoroutine(DelayResetList());
     }
 
+    public void CloseStudentSpawnerMenu()
+    {
+        SelectStudentsUI.Instance.DisableStudentsScrollUI();
+        pressableButtonsClicked = false;
+        pressableButtons.SetActive(false);
+        metaDataPanel.gameObject.SetActive(false);
+    }
+
+    #endregion
+
+    #region Coroutines
+
     IEnumerator DelayResetList()
     {
         yield return null;
         gridObject.UpdateCollection();
         scrollObject.UpdateContent();
     }
+
+    #endregion
+
+    #region Private Methods
 
     private void CleanStudentList()
     {
@@ -169,17 +184,12 @@ public class ScrollParentStudentSpawner : MonoBehaviour
             {
                 Destroy(student);
             }
+
             //studentList.Clear();
             studentList = new List<GameObject>();
         }
     }
 
-    public void CloseStudentSpawnerMenu()
-    {
-        SelectStudentsUI.Instance.DisableStudentsScrollUI();
-        pressableButtonsClicked = false;
-        pressableButtons.SetActive(false);
-        metaDataPanel.gameObject.SetActive(false);
-    }
+    #endregion
 
 }

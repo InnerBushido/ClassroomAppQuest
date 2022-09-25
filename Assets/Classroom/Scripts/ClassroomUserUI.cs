@@ -6,8 +6,11 @@ using Photon.Pun;
 
 public class ClassroomUserUI : MonoBehaviour
 {
+    #region Public Fields
+
     public ScrollParentStudentSpawner studentScrollList;
 
+    #endregion
 
     #region Public Methods
 

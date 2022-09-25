@@ -6,13 +6,21 @@ using Microsoft.MixedReality.Toolkit.UI;
 
 public class SelectStudentsUI : MonoBehaviour
 {
-    public static SelectStudentsUI Instance;
 
-    //public GameObject studentScrollParent;
+    #region Public Fields
+
+    public static SelectStudentsUI Instance;
     public ScrollParentStudentSpawner studentScrollParent;
-    //private bool enabled = false;
+
+    #endregion
+
+    #region Private Fields
 
     private Interactable toggle;
+
+    #endregion
+
+    #region Monobehaviour Callbacks
 
     private void Start()
     {
@@ -25,9 +33,12 @@ public class SelectStudentsUI : MonoBehaviour
             return;
         }
 
-        //enabled = studentScrollParent.gameObject.activeSelf;
         toggle.IsToggled = studentScrollParent.gameObject.activeSelf;
     }
+
+    #endregion
+
+    #region Public Methods
 
     public void ToggleStudentsScrollUI()
     {
@@ -36,8 +47,6 @@ public class SelectStudentsUI : MonoBehaviour
             Debug.LogError("MISSING STUDENT SCROLL UI");
             return;
         }
-
-        //enabled = !enabled;
 
         if(toggle.IsToggled)
         {
@@ -62,8 +71,8 @@ public class SelectStudentsUI : MonoBehaviour
         toggle.IsToggled = false;
 
         studentScrollParent.gameObject.SetActive(false);
-
-        //studentScrollParent.UpdateStudentScrollObject();
     }
+
+    #endregion
 
 }

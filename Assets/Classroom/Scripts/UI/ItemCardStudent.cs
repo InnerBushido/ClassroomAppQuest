@@ -8,6 +8,8 @@ using Microsoft.MixedReality.Toolkit.UI;
 
 public class ItemCardStudent : MonoBehaviour
 {
+    #region Public Fields
+
     public ClassroomUser studentUser;
 
     public TextMeshPro nameText;
@@ -23,19 +25,21 @@ public class ItemCardStudent : MonoBehaviour
     public string userEmail = "";
     public Color userColor = Color.red;
 
-    //public bool studentMuted = false;
+    #endregion
+
+    #region Monobehaviour Callbacks
 
     private void Start()
     {
         studentButtons.SetActive(false);
-        //muteIcon.SetActive(false);
-        //muteIcon2.enabled = false;
     }
+
+    #endregion
+
+    #region Public Methods
 
     public void ToggleStudentButtons()
     {
-        //studentButtons.SetActive(!studentButtons.activeSelf);
-
         ScrollParentStudentSpawner.Instance.PlacePressableButtonsAtLocation(studentButtons.transform, this);
     }
 
@@ -53,18 +57,6 @@ public class ItemCardStudent : MonoBehaviour
         muteIcon.SetActive(studentUser.studentMuted);
         muteIcon2.enabled = studentUser.studentMuted;
     }
-
-    //public void ToggleMuteIcon()
-    //{
-    //    ToggleMuteIcon(!studentUser.studentMuted);
-    //}
-
-    //public void ToggleMuteIcon()
-    //{
-    //    studentUser.studentMuted = !studentUser.studentMuted;
-    //    muteIcon.SetActive(studentUser.studentMuted);
-    //    muteIcon2.enabled = !muteIcon2.enabled;
-    //}
 
     public void UpdateNameText(string _text)
     {
@@ -106,9 +98,11 @@ public class ItemCardStudent : MonoBehaviour
         {
             studentColorMesh.material.color = _color;
         }
-        //studentColorMesh.material.color = _color;
 
         userColor = _color;
         nameText.color = userColor;
     }
+
+    #endregion
+
 }

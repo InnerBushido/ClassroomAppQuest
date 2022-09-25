@@ -7,10 +7,13 @@ using Photon.Realtime;
 
 public class SamuraiAnimationManager : MonoBehaviourPunCallbacks
 {
+    #region Private Fields
 
     private Animator animator;
 
-    //private int currentAnim = 0;
+    #endregion
+
+    #region Monobehaviour Callbacks
 
     private void Start()
     {
@@ -33,6 +36,10 @@ public class SamuraiAnimationManager : MonoBehaviourPunCallbacks
         }
     }
 
+    #endregion
+
+    #region Coroutines
+
     IEnumerator UpdatePlaybackOfAnim()
     {
         yield return new WaitForSeconds(1);
@@ -46,6 +53,8 @@ public class SamuraiAnimationManager : MonoBehaviourPunCallbacks
 
         StartCoroutine(UpdatePlaybackOfAnim());
     }
+
+    #endregion
 
     #region Photon Callbacks
 
