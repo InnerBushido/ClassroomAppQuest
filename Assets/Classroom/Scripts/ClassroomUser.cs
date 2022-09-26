@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Photon.Pun;
+using Photon.Voice.PUN;
+using Photon.Voice.Unity;
 using TMPro;
 
 public class ClassroomUser : MonoBehaviourPunCallbacks
@@ -32,6 +34,8 @@ public class ClassroomUser : MonoBehaviourPunCallbacks
     public Transform startOfSoul;
     public bool studentMuted = false;
 
+    public float studentVoiceLevel = 0;
+
     #endregion
 
     #region MonoBehaviour CallBacks
@@ -42,6 +46,17 @@ public class ClassroomUser : MonoBehaviourPunCallbacks
         {
             userMesh[0] = GetComponent<Renderer>();
         }
+    }
+
+    #endregion
+
+    #region Coroutines
+
+    IEnumerator SendVoiceLevel()
+    {
+        yield return new WaitForSeconds(0.2f);
+        photonView.RPC("PunRPC_SendVoiceLevel", RpcTarget.MasterClient, GetComponent<PhotonVoiceView>().RecorderInUse.LevelMeter.CurrentPeakAmp);
+        StartCoroutine(SendVoiceLevel());
     }
 
     #endregion
@@ -97,6 +112,8 @@ public class ClassroomUser : MonoBehaviourPunCallbacks
             {
                 photonView.RPC("PunRPC_SetNickName", RpcTarget.AllBuffered, PhotonNetwork.NickName);
             }
+
+            StartCoroutine(SendVoiceLevel());
         }
     }
 
@@ -116,6 +133,12 @@ public class ClassroomUser : MonoBehaviourPunCallbacks
     #endregion
 
     #region RPC Calls
+
+    [PunRPC]
+    private void PunRPC_SendVoiceLevel(float voiceLevel)
+    {
+        studentVoiceLevel = voiceLevel;
+    }
 
     [PunRPC]
     private void PunRPC_SetNickName(string nName)

@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 using Photon.Voice.PUN;
+using Photon.Voice.Unity;
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.Utilities;
+using System.Linq;
 
 public class ClassroomManager : MonoBehaviourPunCallbacks
 {
@@ -31,6 +33,16 @@ public class ClassroomManager : MonoBehaviourPunCallbacks
 
     #endregion
 
+    #region Private Fields
+
+    private bool optimizePlayers = false;
+    private int amountOfPlayersBeforeOptimization = 7;
+
+    private Dictionary<int, float> activeRecorders = new Dictionary<int, float>();
+    private Dictionary<int, float> orderedRecorders = new Dictionary<int, float>();
+
+    #endregion
+
     #region MonoBehaviour CallBacks
 
     private void Start()
@@ -46,11 +58,80 @@ public class ClassroomManager : MonoBehaviourPunCallbacks
         {
             InstantiatePlayer();
         }
+
+        StartCoroutine(CheckVoiceOptimizationUpdate());
+    }
+
+    #endregion
+
+    #region Coroutines
+
+    IEnumerator CheckVoiceOptimizationUpdate()
+    {
+        yield return new WaitForSeconds(0.2f);
+        if (optimizePlayers && PhotonNetwork.IsMasterClient)
+        {
+            CheckVoiceOptimization();
+        }
+
+        StartCoroutine(CheckVoiceOptimizationUpdate());
     }
 
     #endregion
 
     #region Private Methods
+
+    private void CheckVoiceOptimization()
+    {
+        activeRecorders = new Dictionary<int, float>();
+
+        // Find all active Recorders
+        foreach (GameObject playerObject in connectedStudentsList)
+        {
+            ClassroomUser player = playerObject.GetComponent<ClassroomUser>();
+
+            if (player != null)
+            {
+                activeRecorders.Add(player.photonView.ViewID, player.studentVoiceLevel);
+            }
+        }
+
+
+        // Check MasterClient Recorder
+        ClassroomUser localPlayer = ClassroomUser.LocalPlayerInstance.GetComponent<ClassroomUser>();
+        if(localPlayer.isProfessor)
+        {
+            activeRecorders.Add(localPlayer.photonView.ViewID, localPlayer.studentVoiceLevel);
+        }
+
+        // If there are more than the Max Amount of Players
+        if(activeRecorders.Count > amountOfPlayersBeforeOptimization)
+        {
+            orderedRecorders = activeRecorders.OrderByDescending(num => num.Value).ToDictionary(num => num.Key, num => num.Value);
+
+            //foreach(var pair in orderedRecorders)
+            //{
+            //    Debug.Log("Ordered Pair: " + pair.Key + " ___ " + pair.Value);
+            //}
+
+            // Only activate the loudest Players
+            int i = 0;
+            foreach(var pair in orderedRecorders)
+            {
+                if (i < amountOfPlayersBeforeOptimization)
+                {
+                    photonView.RPC("PunRPC_MuteSpecificStudent", RpcTarget.All, false, pair.Key);
+                }
+                else
+                {
+                    photonView.RPC("PunRPC_MuteSpecificStudent", RpcTarget.All, true, pair.Key);
+                }
+
+                i++;
+            }
+
+        }
+    }
 
     private void InstantiatePlayer()
     {
@@ -109,6 +190,7 @@ public class ClassroomManager : MonoBehaviourPunCallbacks
                     else
                     {
                         connectedStudentsList.Add(user);
+                        CheckPlayerOptimization();
                     }
                 }
             }
@@ -163,6 +245,23 @@ public class ClassroomManager : MonoBehaviourPunCallbacks
         Instantiate(studentUIPrefab);
     }
 
+    private void CheckPlayerOptimization()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+
+            if (connectedStudentsList.Count > amountOfPlayersBeforeOptimization)
+            {
+                optimizePlayers = true;
+            }
+            else
+            {
+                optimizePlayers = false;
+            }
+
+        }
+    }
+
     #endregion
 
     #region Photon Callbacks
@@ -193,12 +292,14 @@ public class ClassroomManager : MonoBehaviourPunCallbacks
     void AddToConnectedStudentsList(int newStudentView)
     {
         connectedStudentsList.Add(PhotonView.Find(newStudentView).gameObject);
+        CheckPlayerOptimization();
     }
 
     [PunRPC]
     void RemoveFromConnectedStudentsList(int newStudentView)
     {
         connectedStudentsList.Remove(PhotonView.Find(newStudentView).gameObject);
+        CheckPlayerOptimization();
     }
 
     [PunRPC]
@@ -207,6 +308,31 @@ public class ClassroomManager : MonoBehaviourPunCallbacks
         if(photonView.Owner.UserId == userID)
         {
             InstantiatePlayer();
+        }
+    }
+
+    [PunRPC]
+    private void PunRPC_MuteSpecificStudent(bool isMuted, int recorderViewID)
+    {
+        ClassroomUser user = ClassroomUser.LocalPlayerInstance.GetComponent<ClassroomUser>();
+        Recorder recorder = user.GetComponent<PhotonVoiceView>().RecorderInUse;
+
+        if (user.photonView.ViewID == recorderViewID)
+        {
+            //user.studentMuted = isMuted;
+
+            if(isMuted)
+            {
+                recorder.TransmitEnabled = false;
+            }
+            else
+            {
+                // Only UnMute if student isn't forcibly muted
+                if(!user.studentMuted)
+                {
+                    recorder.TransmitEnabled = true;
+                }
+            }
         }
     }
 

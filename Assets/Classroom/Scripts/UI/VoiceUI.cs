@@ -78,7 +78,7 @@ public class VoiceUI : MonoBehaviourPun
         if (!user.isProfessor)
         {
             user.studentMuted = isMuted;
-            this.recorder.TransmitEnabled = !isMuted;
+            recorder.TransmitEnabled = !isMuted;
         }
     }
 
@@ -89,7 +89,7 @@ public class VoiceUI : MonoBehaviourPun
         if (user.photonView.ViewID == userViewID)
         {
             user.studentMuted = isMuted;
-            this.recorder.TransmitEnabled = !isMuted;
+            recorder.TransmitEnabled = !isMuted;
         }
     }
 

@@ -2374,6 +2374,10 @@ PrefabInstance:
       propertyPath: professorSpawnTransform
       value: 
       objectReference: {fileID: 537788252}
+    - target: {fileID: 81400703662933770, guid: b2f52692d7d9171438c835fcc36a7cf7, type: 3}
+      propertyPath: amountOfPlayersBeforeOptimization
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2529045407872127301, guid: b2f52692d7d9171438c835fcc36a7cf7, type: 3}
       propertyPath: m_RootOrder
       value: 4

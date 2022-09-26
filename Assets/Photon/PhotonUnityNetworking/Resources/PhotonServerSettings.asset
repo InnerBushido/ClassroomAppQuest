@@ -63,6 +63,7 @@ MonoBehaviour:
   - PunRPC_MuteSpecificStudent
   - PunRPC_KickSpecificStudent
   - PunRPC_SendAnimationTime
+  - PunRPC_SendVoiceLevel
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

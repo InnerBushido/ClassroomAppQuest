@@ -283,6 +283,7 @@ MonoBehaviour:
   - {fileID: 4946943194376066050}
   startOfSoul: {fileID: 6814384634914746452}
   studentMuted: 0
+  studentVoiceLevel: 0
 --- !u!114 &1430852323374482890
 MonoBehaviour:
   m_ObjectHideFlags: 0

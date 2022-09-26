@@ -5,54 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/NetworkedScene.unity
-    guid: 1b6ad1d1ff595f34890bec61844d8cfc
   - enabled: 1
     path: Assets/Classroom/Scenes/Launcher.unity
     guid: 4079b7ac0d071a6458308a6d35f82eaa
   - enabled: 1
     path: Assets/Classroom/Scenes/Classroom.unity
     guid: 6a670cd2e77b72e4f8a5a50128688596
-  - enabled: 0
-    path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.2/Experimental - ExamplesHub/Scenes/MRTKExamplesHubMainMenu.unity
-    guid: 63a00118e809c754f9c7911bb85d635f
-  - enabled: 0
-    path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.2/Demos - UX/Tooltips/Scenes/TooltipExamples.unity
-    guid: de90a43947eced441b4c426e11f35f28
-  - enabled: 0
-    path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.2/Demos - UX/BoundingBox/Scenes/BoundingBoxExamples.unity
-    guid: 9da574c0affd04d42a6b1e5db09e82b4
-  - enabled: 0
-    path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.2/Demos - UX/PressableButton/Scenes/PressableButtonExample.unity
-    guid: b2d06bb8d7f107d4783a56c796c5c120
-  - enabled: 0
-    path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.2/Demos - UX/Slate/SlateExample.unity
-    guid: 86e8b0c6246dbb74aa04ecd40a57d89c
-  - enabled: 0
-    path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.2/Demos - UX/Slider/Scenes/SliderExample.unity
-    guid: 086aad2912678d04e968264b2398004b
-  - enabled: 0
-    path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.2/Experimental - SceneUnderstanding/Scenes/SceneUnderstandingExample.unity
-    guid: d42a352dc9a8c4d4990a924687759199
-  - enabled: 0
-    path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.2/Experimental - MixedRealityKeyboard/Scenes/MixedRealityKeyboardExample.unity
-    guid: b21a91f417fdc7b41b531772ff092fcb
-  - enabled: 0
-    path: Assets/Oculus/VR/Scenes/TrackedKeyboard.unity
-    guid: eb540761693b1de438733a3581e21f58
-  - enabled: 0
-    path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.2/Experimental - NonNativeKeyboard/Scenes/NonNativeKeyboardExample.unity
-    guid: 5bbd1461a38725245a0eabe0fad1b477
-  - enabled: 0
-    path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.2/Demos - StandardShader/Scenes/ClippingExamples.unity
-    guid: e532091edada3e04aa706112e8d5f310
-  - enabled: 0
-    path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.2/Demos - StandardShader/Scenes/MaterialGallery.unity
-    guid: c6b1477d31864dff836e9738518eae60
-  - enabled: 0
-    path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.2/Demos - ScrollingObjectCollection/Scenes/ScrollingObjectCollection.unity
-    guid: 79a0bb4c0426b7a4099c35eeced52ee4
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: e8924c99290c47e418770525afaccf2b, type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 60245202d137c8c4387e965622c7c64a, type: 2}
